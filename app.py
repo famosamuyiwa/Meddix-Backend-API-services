@@ -53,10 +53,13 @@ api.add_resource(Allergies, '/allergies/<string:name>')
 api.add_resource(Activity, '/activity/<string:name>')
 api.add_resource(Activities, '/activities/<string:name>')
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.after_request
 def after_request(response):
-  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:1234')
+  response.headers.set('Access-Control-Allow-Origin', '/')
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   response.headers.set('Access-Control-Allow-Credentials', True)
