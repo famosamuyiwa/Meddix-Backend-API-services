@@ -53,9 +53,7 @@ api.add_resource(Allergies, '/allergies/<string:name>')
 api.add_resource(Activity, '/activity/<string:name>')
 api.add_resource(Activities, '/activities/<string:name>')
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+
 
 @app.after_request
 def after_request(response):
