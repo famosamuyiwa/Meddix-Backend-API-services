@@ -45,3 +45,4 @@ uuid==1.30
 Werkzeug==2.0.2
 yarg==0.1.9
 uwsgi
+psycopg2
