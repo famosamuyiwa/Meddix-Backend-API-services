@@ -1,91 +1,151 @@
 from db import db
-import sqlite3
-class BasicDataModel():
 
-    def patientData(patientID):
-            connection = sqlite3.connect("data.db")
-            cursor = connection.cursor()
-            query = "SELECT * FROM patients WHERE user_id = ?;"
-            result = cursor.execute(query, (patientID,))
-            row = result.fetchone()
+class PatientDataModel(db.Model):
 
-            connection.close()
-            if row:
-                return {
-                        'responseCode': 0,
-                        'patient': {
-                                    'patient_id' : row[0], 
-                                    'first_name' : row[1],
-                                    'last_name' : row[2],
-                                    'other_name': row[13],
-                                    'username' : row[3],
-                                    'portrait' : row[4],
-                                    'gender' : row[5],
-                                    'mobile_number' : "0{}".format(row[8]),
-                                    'home_address' : row[9],
-                                    'email' : row[11],
-                                    'age' : row[16]
-                                    }
+    __tablename__ = "patients"
+
+    patient_id = db.Column(db.Integer(), primary_key=True)
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
+    other_name = db.Column(db.String(80))
+    username = db.Column(db.String(80))
+    gender = db.Column(db.String(1))
+    mobile_number = db.Column(db.Integer())
+    home_address = db.Column(db.String(80))
+    email = db.Column(db.String(80))
+    age = db.Column(db.Integer())
+
+    def __init__(self,pid,fname,lname,oname,username,gender,mobile_number,home_address,email,age):
+        self.patient_id = pid
+        self.first_name = fname
+        self.last_name = lname
+        self.other_name = oname
+        self.username = username
+        self.gender = gender
+        self.mobile_number = mobile_number
+        self.home_address = home_address
+        self.email = email
+        self.age = age
+
+    @classmethod
+    def patient(cls, pid):
+        return cls.query.filter_by(patient_id=pid).first()
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def json(self):
+        basicdata =  {
+                        "responseCode": 0,
+                        "patient_id": self.patient_id,
+                        "first_name" : self.first_name,
+                        "last_name" : self.last_name,
+                        "other_name" : self.other_name,
+                        "username" : self.username,
+                        "mobile_number": "0{}".format(self.mobile_number),
+                        "email" : self.email,
+                        "age" : self.age,
+                        "gender": self.gender,
+                        "home_address": self.home_address
                         }
-            return {'responseCode': 1, 'message': 'user not found'}, 400
-                
 
-    def consultantData(consultantID):
-        connection = sqlite3.connect("data.db")
-        cursor = connection.cursor()
-           
-        query = "SELECT * FROM consultants WHERE user_id = ?;"
-        result = connection.execute(query,(consultantID,))
-        
-        row = result.fetchone()
+        return basicdata
 
-        connection.close()
+    
+class ConsultantDataModel(db.Model):
+    
+    __tablename__ = "consultants"
 
-        if row:
-            return{
-                    'responseCode': 0,
-                    'consultant': {
-                        'consultant_id': row[0],
-                        'first_name': row[1],
-                        'last_name': row[2],
-                        'other_name' : row[13],
-                        'username': row[3],
-                        'gender': row[4],
-                        'specialty': row[5],
-                        'mobile_number': "0{}".format(row[7]),
-                        'home_address': row[8],
-                        'status': row[9],
-                        'email': row[10],
-                        "total_prescriptions" : row[15],
-                        "appointments_completed" : row[14]  
-                    }
-            }
-        return {'responseCode': 1, 'message': 'user not found'}, 400
+    consultant_id = db.Column(db.Integer(), primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    other_name = db.Column(db.String(50))
+    specialty = db.Column(db.String(50))
+    mobile_number = db.Column(db.Integer())
+    email = db.Column(db.String(50))
+    total_prescriptions = db.Column(db.Integer())
+    appointments_completed = db.Column(db.Integer())
+    user_id = db.Column(db.Integer())
+    username = db.Column(db.String(50))
+    gender = db.Column(db.String(50))
+    create_date = db.Column(db.String(50))
+    
+    @classmethod
+    def consultant(cls, cid):
+        return cls.query.filter_by(consultant_id=cid).first()
 
 
-    def dispensaryData(dispensaryID):
+    def __init__(self, cid, firstname, lastname, othername, specialty, mobile_number, email, total_rx, appts_completed):
+        self.consultant_id = cid
+        self.first_name = firstname
+        self.last_name = lastname
+        self.other_name = othername
+        self.specialty = specialty
+        self.mobile_number = mobile_number
+        self.email = email
+        self.appointments_completed = appts_completed
+        self.total_prescriptions = total_rx
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def json(self):
+        basicdata =  {
+                        "responseCode": 0,
+                        "consultant_id": self.consultant_id,
+                        "first_name" : self.first_name,
+                        "last_name" : self.last_name,
+                        "other_name" : self.other_name,
+                        "specialty" : self.specialty,
+                        "mobile_number": "0{}".format(self.mobile_number),
+                        "email" : self.email,
+                        "total_prescriptions" : self.total_prescriptions,
+                        "appointments_completed" : self.appointments_completed  
+                        }
+
+        return basicdata
+    
+class DispenserDataModel(db.Model):
          
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
+    __tablename__ = "dispensary"
+    dispensary_id = db.Column(db.Integer(), primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    mobile_number = db.Column(db.Integer())
+    email = db.Column(db.String(50))
+    user_id = db.Column(db.Integer())
+    username = db.Column(db.String(50))
+    gender = db.Column(db.String(50))
+    create_date = db.Column(db.String(50))
+    home_address = db.Column(db.String(80))
 
-        query = "SELECT * FROM dispensary WHERE user_id = ?"
-        result = cursor.execute(query, (dispensaryID,))
+    @classmethod
+    def dispenser(cls, did):
+        return cls.query.filter_by(dispensary_id=did).first()
 
-        row = result.fetchone()
-        
-        if row:
-            return{
-                    'responseCode': 0,
-                    'dispensary': {
-                        'dispensary_id': row[0],
-                        'first_name': row[1],
-                        'last_name': row[2],
-                        'username': row[3],
-                        'gender': row[4],
-                        'mobile_number': "0{}".format(row[6]),
-                        'home_address': row[7],
-                        'status': row[8],
-                        'email': row[9]
+
+    def __init__(self, fname, lname, username, gender, create_date, mobile_number, home_address, status, email, user_id):
+        self.first_name = fname
+        self.last_name = lname
+        self.username = username
+        self.gender = gender
+        self.create_date = create_date
+        self.mobile_number = mobile_number
+        self.home_address = home_address
+        self.status = status
+        self.email = email
+        self.user_id = user_id
+
+    def json(self):
+        basicdata =  {
+                    "responseCode": 0,
+                    "dispensary_id": self.dispensary_id,
+                    "first_name" : self.first_name,
+                    "last_name" : self.last_name,
+                    "mobile_number": "0{}".format(self.mobile_number),
+                    "email" : self.email,
                     }
-            }
-        return {'responseCode': 1, 'message': 'user not found'}, 400
+
+        return basicdata

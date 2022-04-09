@@ -1,7 +1,7 @@
 from flask_jwt import jwt_required
 from flask_restful import Resource, reqparse
 from werkzeug.security import safe_str_cmp as compare
-from models.basicData import BasicDataModel
+from models.basicData import PatientDataModel, ConsultantDataModel, DispenserDataModel
 
 
 
@@ -14,15 +14,18 @@ class BasicData(Resource):
         data = parser.parse_args()
 
         if compare(data['category'], "patient"):        #safe string compare (safe_str_cmp) as compare 
-            return BasicDataModel.patientData(name)
+            patient = PatientDataModel.patient(name)
+            return patient.json()
         
         if compare(data['category'], "consultant"):
-            return BasicDataModel.consultantData(name)
+            consultant = ConsultantDataModel.consultant(name)
+            return consultant.json()
 
         if compare(data['category'], "dispenser"):
-            return BasicDataModel.dispensaryData(name)
+            dispenser = DispenserDataModel.dispenser(name)
+            return dispenser.json()
         
-        return {"responseCode": 1, "message" : "user type '%s' does not exist".format(data['category'])}, 400
+        return {"responseCode": 1, "message" : "user type {data[category]} does not exist".format(data['category'])}, 400
 
         
 

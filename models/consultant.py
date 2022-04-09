@@ -4,20 +4,21 @@ from db import db
 class ConsultantModel(db.Model):
     
     __tablename__ = "consultants"
+    __table_args__ = {'extend_existing':True}
 
     consultant_id = db.Column(db.Integer(), primary_key=True)
-    first_name = db.Column(db.String(20))
-    last_name = db.Column(db.String(20))
-    other_name = db.Column(db.String(20))
-    specialty = db.Column(db.String(20))
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    other_name = db.Column(db.String(50))
+    specialty = db.Column(db.String(50))
     mobile_number = db.Column(db.Integer())
-    email = db.Column(db.String(20))
+    email = db.Column(db.String(50))
     total_prescriptions = db.Column(db.Integer())
     appointments_completed = db.Column(db.Integer())
     user_id = db.Column(db.Integer())
-    username = db.Column(db.String(20))
-    gender = db.Column(db.String(20))
-    create_date = db.Column(db.String(20))
+    username = db.Column(db.String(50))
+    gender = db.Column(db.String(50))
+    create_date = db.Column(db.String(50))
     
 
     def __init__(self, cid, firstname, lastname, othername, specialty, mobile_number, email, total_rx, appts_completed):

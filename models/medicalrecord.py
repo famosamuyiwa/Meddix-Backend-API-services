@@ -89,7 +89,7 @@ class MedicalReportModel(db.Model):
     __tablename__ = "medical_report"
 
     id = db.Column(db.Integer(), primary_key = True)
-    appointment_id = db.Column(db.Integer())
+    appointment_id = db.Column(db.String())
     patient_id = db.Column(db.Integer())
     consultant_id = db.Column(db.Integer())
     diagnosis = db.Column(db.String())
