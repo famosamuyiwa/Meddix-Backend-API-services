@@ -1,6 +1,5 @@
 from werkzeug.security import safe_str_cmp as compare
 from db import db
-import sqlite3
 
 
 class UserModel(db.Model):
@@ -32,40 +31,6 @@ class UserModel(db.Model):
         return cls.query.filter_by(id=_id).first()
 
 
-    @classmethod
-    def user(cls, username):
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
-
-        try:
-            user = cls.find_by_username(username)
-        except:
-            return {"responseCode": -1, "message": "internal server error"}, 500
-
-        query = "SELECT username, first_name, last_name from {} where username = ?;"
-        
-        if compare(user.category, "patient"):
-            final_query = query.format("patients")
-        if compare(user.category,"consultant"):
-            final_query = query.format("consultants")
-        if compare(user.category, "dispensary"):
-            final_query = query.format("dispensary")
-
-        result = cursor.execute(final_query,(username,))
-        row = result.fetchone()
-        connection.close()
-
-        if row:
-            user =  {
-                        "responseCode": 0,
-                        "username" : row[0],
-                        "first_name" : row[1] ,
-                        "last_name" : row [2],
-                        "category" : user.category
-                    }
-            return user
- 
-        return {"responseCode": 1, "message" : "user not found"}, 400 
 
         
         

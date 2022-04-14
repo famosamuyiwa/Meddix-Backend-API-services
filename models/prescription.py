@@ -9,11 +9,11 @@ class PrescriptionModel(db.Model):
     patient_id = db.Column(db.Integer())
     consultant_id = db.Column(db.Integer())
     appointment_id = db.Column(db.Integer())
-    drug_name = db.Column(db.String())
+    drug_name = db.Column(db.String(80))
     serving = db.Column(db.Integer())
-    prescription_id = db.Column(db.String())
+    prescription_id = db.Column(db.String(80))
     price = db.Column(db.Integer())
-    create_date = db.Column(db.String())
+    create_date = db.Column(db.String(80))
     status = db.Column(db.Enum(PaymentStatus, name='status', default=PaymentStatus.INITIATED))    
 
     def __init__(self, pid, cid, appt_id, drug, serving, price, date, status):

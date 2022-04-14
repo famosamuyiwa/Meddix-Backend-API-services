@@ -11,7 +11,7 @@ class PatientModel(db.Model):
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80))
     other_name = db.Column(db.String(80))
-    mobile_number = db.Column(db.Integer())
+    mobile_number = db.Column(db.String(80))
     email = db.Column(db.String(80))
     user_id = db.Column(db.Integer())
 
@@ -34,7 +34,7 @@ class PatientModel(db.Model):
     def json(self):
         patient =  {
                         "responseCode": 0,
-                        "consultant_id": self.consultant_id,
+                        "patient_id": self.patient_id,
                         "first_name" : self.first_name,
                         "last_name" : self.last_name,
                         "other_name" : self.other_name,

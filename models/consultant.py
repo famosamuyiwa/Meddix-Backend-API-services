@@ -7,18 +7,18 @@ class ConsultantModel(db.Model):
     __table_args__ = {'extend_existing':True}
 
     consultant_id = db.Column(db.Integer(), primary_key=True)
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
-    other_name = db.Column(db.String(50))
-    specialty = db.Column(db.String(50))
-    mobile_number = db.Column(db.Integer())
-    email = db.Column(db.String(50))
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
+    other_name = db.Column(db.String(80))
+    specialty = db.Column(db.String(80))
+    mobile_number = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     total_prescriptions = db.Column(db.Integer())
     appointments_completed = db.Column(db.Integer())
     user_id = db.Column(db.Integer())
-    username = db.Column(db.String(50))
-    gender = db.Column(db.String(50))
-    create_date = db.Column(db.String(50))
+    username = db.Column(db.String(80))
+    gender = db.Column(db.String(1))
+    create_date = db.Column(db.String(80))
     
 
     def __init__(self, cid, firstname, lastname, othername, specialty, mobile_number, email, total_rx, appts_completed):

@@ -6,9 +6,9 @@ class AllergyModel(db.Model):
 
     id = db.Column(db.Integer(), primary_key=True)
     patient_id = db.Column(db.Integer())
-    allergy = db.Column(db.String())
-    reaction = db.Column(db.String())
-    create_date = db.Column(db.String())
+    allergy = db.Column(db.String(80))
+    reaction = db.Column(db.String(80))
+    create_date = db.Column(db.String(80))
 
     def __init__(self, pid, allergy, reaction, create_date):
         self.patient_id = pid

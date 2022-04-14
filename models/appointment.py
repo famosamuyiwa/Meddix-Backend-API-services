@@ -8,15 +8,15 @@ class AppointmentModel(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     consultant_id = db.Column(db.Integer(), nullable=False)
     patient_id = db.Column(db.Integer())
-    create_date = db.Column(db.String())
-    last_modified_date = db.Column(db.String())
-    schedule_date = db.Column(db.String())
-    schedule_time = db.Column(db.String())
-    schedule_venue = db.Column(db.String())
-    schedule_reason = db.Column(db.String())
+    create_date = db.Column(db.String(80))
+    last_modified_date = db.Column(db.String(80))
+    schedule_date = db.Column(db.String(80))
+    schedule_time = db.Column(db.String(80))
+    schedule_venue = db.Column(db.String(80))
+    schedule_reason = db.Column(db.String(80))
     status = db.Column(db.Enum(ApptStatus, name='status', default=ApptStatus.PENDING))    
-    appointment_id = db.Column(db.String())
-    diagnosis = db.Column(db.String())
+    appointment_id = db.Column(db.String(80))
+    diagnosis = db.Column(db.String(80))
 
 
     def __init__(self, cid, pid, create_date, last_modified_date, date, time, venue, reason, status, diagnosis):

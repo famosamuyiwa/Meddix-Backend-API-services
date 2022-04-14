@@ -10,7 +10,7 @@ class PatientDataModel(db.Model):
     other_name = db.Column(db.String(80))
     username = db.Column(db.String(80))
     gender = db.Column(db.String(1))
-    mobile_number = db.Column(db.Integer())
+    mobile_number = db.Column(db.String(50))
     home_address = db.Column(db.String(80))
     email = db.Column(db.String(80))
     age = db.Column(db.Integer())
@@ -58,18 +58,18 @@ class ConsultantDataModel(db.Model):
     __tablename__ = "consultants"
 
     consultant_id = db.Column(db.Integer(), primary_key=True)
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
-    other_name = db.Column(db.String(50))
-    specialty = db.Column(db.String(50))
-    mobile_number = db.Column(db.Integer())
-    email = db.Column(db.String(50))
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
+    other_name = db.Column(db.String(80))
+    specialty = db.Column(db.String(80))
+    mobile_number = db.Column(db.String(20))
+    email = db.Column(db.String(80))
     total_prescriptions = db.Column(db.Integer())
     appointments_completed = db.Column(db.Integer())
     user_id = db.Column(db.Integer())
-    username = db.Column(db.String(50))
-    gender = db.Column(db.String(50))
-    create_date = db.Column(db.String(50))
+    username = db.Column(db.String(80))
+    gender = db.Column(db.String(1))
+    create_date = db.Column(db.String(80))
     
     @classmethod
     def consultant(cls, cid):
@@ -111,14 +111,14 @@ class DispenserDataModel(db.Model):
          
     __tablename__ = "dispensary"
     dispensary_id = db.Column(db.Integer(), primary_key=True)
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
-    mobile_number = db.Column(db.Integer())
-    email = db.Column(db.String(50))
+    first_name = db.Column(db.String(80))
+    last_name = db.Column(db.String(80))
+    mobile_number = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     user_id = db.Column(db.Integer())
-    username = db.Column(db.String(50))
-    gender = db.Column(db.String(50))
-    create_date = db.Column(db.String(50))
+    username = db.Column(db.String(80))
+    gender = db.Column(db.String(1))
+    create_date = db.Column(db.String(80))
     home_address = db.Column(db.String(80))
 
     @classmethod

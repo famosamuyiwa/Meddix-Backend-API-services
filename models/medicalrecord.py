@@ -13,10 +13,10 @@ class VitalsModel(db.Model):
     temperature= db.Column(db.Integer())
     pulse= db.Column(db.Integer()) 
     respiratory_rate = db.Column(db.Integer())
-    blood_pressure = db.Column(db.String())
+    blood_pressure = db.Column(db.String(20))
     blood_oxygen_saturation = db.Column(db.Integer())
-    create_date = db.Column(db.String())
-    last_modified_date= db.Column(db.String())
+    create_date = db.Column(db.String(80))
+    last_modified_date= db.Column(db.String(80))
 
     def __init__(self, pid, height, weight, bmi, temperature, pulse, resp_rate, bp, b_o_s, create_date, l_m_d):
 
@@ -89,11 +89,11 @@ class MedicalReportModel(db.Model):
     __tablename__ = "medical_report"
 
     id = db.Column(db.Integer(), primary_key = True)
-    appointment_id = db.Column(db.String())
+    appointment_id = db.Column(db.String(80))
     patient_id = db.Column(db.Integer())
     consultant_id = db.Column(db.Integer())
-    diagnosis = db.Column(db.String())
-    create_date = db.Column(db.String())
+    diagnosis = db.Column(db.String(500))
+    create_date = db.Column(db.String(80))
 
     def __init__(self, appt_id, pid, cid, diagnosis, create_date):
         self.appointment_id = appt_id
